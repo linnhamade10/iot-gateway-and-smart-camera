@@ -68,8 +68,6 @@ The system consists of:
 ├── posture_data_collection.py
 ├── templates/
 │   └── index.html
-├── static/
-│   └── visitor.jpg
 ├── README.md
 └── .gitignore
 ```
