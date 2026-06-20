@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<!-- This tells the browser that this is an HTML5 document -->
+
+<html lang="en">
+<!-- Root HTML element, language set to English -->
+
+<head>
+    <!-- Character encoding so text displays correctly -->
+    <meta charset="UTF-8">
+
+    <!-- Title shown in the browser tab -->
+    <title>IoT Gateway – Lab 3 & Lab 4</title>
+
+    <!-- ===============================
+         PAGE STYLING (CSS)
+         =============================== -->
+    <style>
+        /* Basic page font and background */
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main centered page container */
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Main page title */
+        h1 {
+            margin-top: 0;
+        }
+
+        /* Box used for each lab section */
+        .section {
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Section title (Lab 3 / Lab 4) */
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* Smaller subtitle text under section title */
+        .subtitle {
+            font-size: 13px;
+            color: #777777;
+            margin-bottom: 12px;
+        }
+
+        /* Default button and link styling */
+        button, .btn-link {
+            display: inline-block;
+            padding: 10px 18px;
+            margin: 6px 6px 0 0;
+            border-radius: 4px;
+            border: 1px solid #1976d2;
+            background-color: #2196f3;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Button hover effect */
+        button:hover, .btn-link:hover {
+            background-color: #1976d2;
+        }
+
+        /* Styling for OFF buttons */
+        .btn-off {
+            border-color: #777777;
+            background-color: #9e9e9e;
+        }
+
+        .btn-off:hover {
+            background-color: #757575;
+        }
+
+        /* Small LED indicator circle */
+        .led-indicator {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 1px solid #444;
+        }
+
+        /* Green LED indicator */
+        .led-green {
+            background-color: #4caf50;
+        }
+
+        /* Red LED indicator */
+        .led-red {
+            background-color: #f44336;
+        }
+
+        /* Status message container */
+        .status {
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Allow decision styling */
+        .status-allow {
+            background-color: #e3f9e5;
+            border: 1px solid #8bc34a;
+            color: #2e7d32;
+        }
+
+        /* Deny decision styling */
+        .status-deny {
+            background-color: #fdecea;
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+
+        /* Neutral / default status styling */
+        .status-neutral {
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+            color: #555555;
+        }
+
+        /* Snapshot image styling */
+        img.snapshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid #cccccc;
+            margin-top: 10px;
+        }
+
+        /* Small helper text */
+        .small-text {
+            font-size: 12px;
+            color: #777777;
+            margin-top: 6px;
+        }
+    </style>
+
+    <!-- ===============================
+         JAVASCRIPT LOGIC
+         =============================== -->
+    <script>
+        // When the page loads, check if it came from a snapshot action
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // If the snapshot just happened, reload page after a short delay
+            if (urlParams.get("from_snapshot") === "1") {
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 700);
+            }
+        };
+
+        // Function to control LEDs on the Raspberry Pi
+        function controlLED(color, state) {
+            // Sends HTTP request to Flask API: /led/<color>/<state>
+            fetch(`/led/${color}/${state}`)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log("LED response:", data);
+                })
+                .catch(err => {
+                    console.error("LED control error:", err);
+                });
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- Main page wrapper -->
+<div class="page">
+
+    <!-- Page heading -->
+    <h1>IoT Gateway – Lab 3 & Lab 4</h1>
+
+    < 
+         LAB 3: LED CONTROL SECTION
+        
+    <div class="section">
+
+        <!-- Section title -->
+        <div class="section-title">Lab 3 – LED Control</div>
+
+        <!-- Section description -->
+        <div class="subtitle">
+            Control the green and red LEDs on the Raspberry Pi (Lab 3 functionality).
+        </div>
+
+        <!-- Green LED controls -->
+        <div>
+            <div>
+                <span class="led-indicator led-green"></span>
+                <strong>Green LED</strong>
+            </div>
+            <div>
+                <!-- Turn green LED ON -->
+                <button onclick="controlLED('green', 'on')">Turn ON</button>
+
+                <!-- Turn green LED OFF -->
+                <button class="btn-off" onclick="controlLED('green', 'off')">Turn OFF</button>
+            </div>
+        </div>
+
+        <!-- Red LED controls -->
+        <div style="margin-top:14px;">
+            <div>
+                <span class="led-indicator led-red"></span>
+                <strong>Red LED</strong>
+            </div>
+            <div>
+                <!-- Turn red LED ON -->
+                <button style="background-color:#f44336; border-color:#d32f2f;"
+                        onclick="controlLED('red', 'on')">
+                    Turn ON
+                </button>
+
+                <!-- Turn red LED OFF -->
+                <button class="btn-off" onclick="controlLED('red', 'off')">Turn OFF</button>
+            </div>
+        </div>
+
+        <!-- Explanation of which API is used -->
+        <div class="small-text">
+            This section uses the <code>/led/&lt;color&gt;/&lt;state&gt;</code> API implemented in your Lab 3 Flask app.
+        </div>
+    </div>
+
+    <!-- ==================================================
+         LAB 4: DOOR VISION SECTION
+         ================================================== -->
+    <div class="section">
+
+        <!-- Section title -->
+        <div class="section-title">Lab 4 – Door Vision (Custom Vision)</div>
+
+        <!-- Section description -->
+        <div class="subtitle">
+            Press the physical button or click "Take Snapshot Now". The Pi takes a photo,
+            sends it to Azure Custom Vision, and turns LEDs on/off based on allow/deny.
+        </div>
+
+        <!-- If a snapshot exists, show it -->
+        {% if snapshot_exists|default(false) %}
+            <img src="{{ url_for('static', filename='visitor.jpg') }}"
+                 alt="Visitor image"
+                 class="snapshot">
+        {% else %}
+            <!-- Message if no image has been taken yet -->
+            <p>No snapshot captured yet.</p>
+        {% endif %}
+
+        <!-- Read the current classification tag from Flask -->
+        {% set current_tag = tag|default('') %}
+
+        <!-- If decision is ALLOW -->
+        {% if current_tag == 'allow' %}
+            <div class="status status-allow">
+                Decision: ALLOW<br>
+                Tag: {{ current_tag }}<br>
+                {% if probability is not none %}
+                    Confidence: {{ (probability * 100) | round(1) }}%
+                {% endif %}
+            </div>
+
+        <!-- If decision is DENY -->
+        {% elif current_tag == 'deny' %}
+            <div class="status status-deny">
+                Decision: DENY<br>
+                Tag: {{ current_tag }}<br>
+                {% if probability is not none %}
+                    Confidence: {{ (probability * 100) | round(1) }}%
+                {% endif %}
+            </div>
+
+        <!-- Default / neutral state -->
+        {% else %}
+            <div class="status status-neutral">
+                {{ message|default("No image captured yet.") }}
+            </div>
+        {% endif %}
+
+        <!-- Button to manually take a snapshot -->
+        <div style="margin-top: 10px;">
+            <a href="{{ url_for('snapshot') }}" class="btn-link">Take Snapshot Now</a>
+        </div>
+
+        <!-- Explanation text -->
+        <div class="small-text">
+            When Lab 4 Flask app is running, this button calls <code>/snapshot</code>.
+            Pressing the hardware button on GPIO5 also triggers a snapshot.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
