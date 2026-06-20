@@ -4,7 +4,7 @@ Edge computing and IoT gateway system using Raspberry Pi, Flask, sensors, comput
 
 ## Overview
 
-This project was developed as part of the DT373B Systems Design for Internet of Things course at Kristianstad University. A Raspberry Pi was configured as an IoT gateway and edge device to provide remote monitoring and control through Flask-based REST APIs and a web interface. The system integrated GPIO devices, sensors, a USB camera, and Azure cloud services to enable event-driven operation, sensor data acquisition, image classification, and machine learning applications.
+This project was developed as part of the Systems Design for Internet of Things course at Kristianstad University. A Raspberry Pi was configured as an IoT gateway and edge device to provide remote monitoring and control through Flask-based REST APIs and a web interface. The system integrated GPIO devices, sensors, a USB camera, and Azure cloud services to enable event-driven operation, sensor data acquisition, image classification, and machine learning applications.
 
 ## Features
 
@@ -58,26 +58,6 @@ The system consists of:
 * Git
 * GitHub
 * Visual Studio Code
-
-## Repository Structure
-
-```text
-.
-├── app.py
-├── camera_classifier.py
-├── posture_data_collection.py
-├── templates/
-│   └── index.html
-├── README.md
-└── .gitignore
-```
-
-## Course
-
-Developed as part of:
-
-**DT373B – Systems Design for Internet of Things**
-Kristianstad University
 
 ## Collaboration
 
