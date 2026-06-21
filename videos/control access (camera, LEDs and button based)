@@ -1,0 +1,5 @@
+- Implemented Flask-based REST APIs for remote monitoring and control.
+- Developed a web interface for interacting with the system.
+- Controlled LEDs and GPIO devices through the web interface.
+Link:
+https://youtu.be/h-WhfSGiGAs
